@@ -22,18 +22,18 @@ public class GestionFXML extends Application
     private ChoiceBox<String> debutBox;
     private String[] mois = {"Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"};
     
-
     @Override
     public void start(Stage stage) throws Exception
     {
         Parent root = FXMLLoader.load(getClass().getResource("interface.fxml"));
         
+        debutBox.getItems().addAll(mois);
+        
         Scene scene = new Scene (root);
-        stage.setTitle("Gestion des stages");
-        
-        //debutBox.getItems().addAll(mois);
-        
-        stage.setScene(scene);
+        //stage.setTitle("Gestion des stages");
+                
+        stage.setScene(scene);        
         stage.show();
+        
     }
 }
