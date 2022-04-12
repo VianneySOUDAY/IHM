@@ -13,25 +13,14 @@ import javafx.fxml.FXML;
  * @author Vianney SOUDAY
  * @version 04/04/2022
  */
-public class Controller
+public class SiteController
 {
-     private int count = 0;
-    
-    @FXML
-    private Label myLabel = new Label("0");
-    
     @FXML
     private Button modifierButton = new Button("Modifier");
     
     @FXML
     private Button supprimerButton = new Button("Supprimer");
     
-    @FXML
-    private void buttonClick(ActionEvent event)
-    {
-        count = count + 1;
-        myLabel.setText(Integer.toString(count));
-    }
     
     @FXML
     private void modifierClick(ActionEvent event){
