@@ -20,7 +20,7 @@ public class SiteController
 {  
     @FXML
     private Label monLabel = new Label("un label vide");
-
+    
     @FXML
     /**
      * Methode modifierClick
