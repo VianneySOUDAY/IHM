@@ -28,9 +28,12 @@
       <ImageView fitHeight="150.0" fitWidth="538.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@logo.png" />
-         </image></ImageView>
+         </image>
+         <GridPane.margin>
+            <Insets left="20.0" top="20.0" />
+         </GridPane.margin></ImageView>
       <Label text="Gestion des offres de stage" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-      <TableView fx:id="table" prefHeight="426.0" prefWidth="373.0" GridPane.rowIndex="2">
+      <TableView prefHeight="426.0" prefWidth="373.0" GridPane.rowIndex="2">
         <columns>
           <TableColumn prefWidth="222.3999900817871" text="Nom de la structure" />
           <TableColumn prefWidth="297.59999084472656" text="Sujet du stage" />
@@ -39,7 +42,7 @@
             <Insets bottom="50.0" left="20.0" />
          </GridPane.margin>
       </TableView>
-      <ChoiceBox fx:id="trieBox" prefHeight="28.0" prefWidth="418.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+      <ChoiceBox prefHeight="28.0" prefWidth="418.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
       <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -68,27 +71,27 @@
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin></Button>
-            <TextField fx:id="structureField" GridPane.columnIndex="1">
+            <TextField GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets right="20.0" />
                </GridPane.margin></TextField>
-            <TextField fx:id="sujetField" prefHeight="26.0" prefWidth="223.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextField prefHeight="26.0" prefWidth="223.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <padding>
                   <Insets right="20.0" />
                </padding>
                <GridPane.margin>
                   <Insets right="20.0" />
                </GridPane.margin></TextField>
-            <ChoiceBox fx:id="debutBox" prefHeight="28.0" prefWidth="230.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+            <ChoiceBox prefHeight="28.0" prefWidth="230.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets right="20.0" />
                </GridPane.margin></ChoiceBox>
-            <ChoiceBox fx:id="dureeMonthBox" prefHeight="28.0" prefWidth="159.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+            <ChoiceBox prefHeight="28.0" prefWidth="159.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets right="20.0" />
                </GridPane.margin></ChoiceBox>
             <ComboBox prefHeight="28.0" prefWidth="82.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <ChoiceBox fx:id="promoBox" prefHeight="28.0" prefWidth="159.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+            <ChoiceBox prefHeight="28.0" prefWidth="159.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
             <Button mnemonicParsing="false" onAction="#abandonnerClick" prefHeight="30.0" prefWidth="91.0" text="Abandonner" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets right="75.0" />
