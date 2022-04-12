@@ -13,7 +13,7 @@ import javafx.fxml.FXML;
  * @author Vianney SOUDAY
  * @version 04/04/2022
  */
-public class CptController
+public class Controller
 {
     private int count = 0;
     
