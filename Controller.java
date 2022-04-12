@@ -15,15 +15,31 @@ import javafx.fxml.FXML;
  */
 public class Controller
 {
-    private int count = 0;
+     private int count = 0;
     
     @FXML
     private Label myLabel = new Label("0");
+    
+    @FXML
+    private Button modifierButton = new Button("Modifier");
+    
+    @FXML
+    private Button supprimerButton = new Button("Supprimer");
     
     @FXML
     private void buttonClick(ActionEvent event)
     {
         count = count + 1;
         myLabel.setText(Integer.toString(count));
+    }
+    
+    @FXML
+    private void modifierClick(ActionEvent event){
+        
+    }
+    
+    @FXML
+    private void supprimerClick(ActionEvent event){
+        
     }
 }
