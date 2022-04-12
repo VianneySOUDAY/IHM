@@ -8,7 +8,10 @@ import javafx.scene.Parent;
 import javafx.fxml.FXMLLoader;
 
 /**
- * @author Vianney SOUDAY, Arthur MESLIN, Mathew FAILLOT
+ * Classe GestionFXML
+ * Permet de creer notre fenêtre à partir du fichier .FXML
+ * 
+ * @author SOUDAY Vianney / MESLIN Arthur / FAILLOT Mathew
  * @version 05/04/2022
  */
 public class GestionFXML extends Application

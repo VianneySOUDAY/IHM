@@ -67,7 +67,7 @@
                <GridPane.margin>
                   <Insets />
                </GridPane.margin></Button>
-            <Button mnemonicParsing="false" onAction="#supprimerClick" prefHeight="30.0" prefWidth="81.0" text="Supprimer" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="81.0" text="Supprimer" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="5" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin></Button>
@@ -92,16 +92,17 @@
                </GridPane.margin></ChoiceBox>
             <ComboBox prefHeight="28.0" prefWidth="82.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <ChoiceBox prefHeight="28.0" prefWidth="159.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-            <Button mnemonicParsing="false" onAction="#abandonnerClick" prefHeight="30.0" prefWidth="91.0" text="Abandonner" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="91.0" text="Abandonner" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets right="75.0" />
                </GridPane.margin></Button>
          </children>
       </GridPane>
-      <Button mnemonicParsing="false" onAction="#ajouterClick" prefHeight="30.0" prefWidth="114.0" text="Ajouter un stage" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+      <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="114.0" text="Ajouter un stage" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
          <GridPane.margin>
             <Insets bottom="10.0" />
          </GridPane.margin>
       </Button>
+      <Label fx:id="monLabel" prefHeight="18.0" prefWidth="534.0" text="un label vide" GridPane.columnIndex="1" GridPane.rowIndex="1" />
    </children>
 </GridPane>
