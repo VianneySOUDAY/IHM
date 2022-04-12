@@ -14,13 +14,7 @@ import javafx.fxml.FXML;
  * @version 04/04/2022
  */
 public class SiteController
-{
-    @FXML
-    private Button modifierButton = new Button("Modifier");
-    
-    @FXML
-    private Button supprimerButton = new Button("Supprimer");
-    
+{  
     
     @FXML
     private void modifierClick(ActionEvent event){
@@ -31,4 +25,10 @@ public class SiteController
     private void supprimerClick(ActionEvent event){
         
     }
+    
+    @FXML
+    private void abandonnerClick(ActionEvent event){
+        
+    }
+    
 }
