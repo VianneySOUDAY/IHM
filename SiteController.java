@@ -12,6 +12,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 
 /**
  * Classe SiteController
@@ -29,6 +31,7 @@ public class SiteController implements Initializable
     @FXML private ChoiceBox<String> dureeBox;
     @FXML private ChoiceBox<String> cibleBox;
     @FXML private ChoiceBox<String> trieBox;
+    @FXML private Spinner nombreSpinner;
     
     @FXML
     /**
@@ -36,7 +39,7 @@ public class SiteController implements Initializable
      * permet de valider la modification faites sur les champs d'un stage
      */
     private void modifierClick(ActionEvent event){
-        monLabel.setText("clic sur modifier\n"+debutBox.getValue());
+        monLabel.setText("clic sur modifier : "+nombreSpinner.getValue());
     }
     
     @FXML
@@ -70,16 +73,19 @@ public class SiteController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         debutBox.getItems().addAll("Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre");
-        debutBox.setValue("Janvier");
+        debutBox.setValue("Mai");
         
         dureeBox.getItems().addAll("Jours","Semaines","Mois");
-        dureeBox.setValue("Jours");
+        dureeBox.setValue("Mois");
         
         cibleBox.getItems().addAll("L3","M1","M2");
         cibleBox.setValue("L3");
         
         trieBox.getItems().addAll("Tous les stages", "Uniquement les stages de L3", "Uniquement les stages de M1", "Uniquement les stages de M2");
         trieBox.setValue("Tous les stages");
+        
+        SpinnerValueFactory<Integer> nombreValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,360,3);
+        nombreSpinner.setValueFactory(nombreValueFactory);
     }
 }
     
