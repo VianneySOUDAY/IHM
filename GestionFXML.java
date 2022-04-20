@@ -27,12 +27,13 @@ public class GestionFXML extends Application
     {
         Parent root = FXMLLoader.load(getClass().getResource("interface.fxml"));
         
-        debutBox.getItems().addAll(mois);
+        //debutBox.getItems().addAll(mois);
         
         Scene scene = new Scene (root);
-        //stage.setTitle("Gestion des stages");
+        stage.setTitle("Gestion des stages");
                 
-        stage.setScene(scene);        
+        stage.setScene(scene); 
+        scene.getStylesheets().add("style.css");
         stage.show();
         
     }

@@ -1,0 +1,58 @@
+.root{
+    -fx-font-size: 14pt;
+    -fx-font-family: "Josefin Slab";
+    -fx-background-image:url(background2.jpg);
+}
+
+/* ==============================================================
+    Mise en forme du formulaire 
+*/
+
+.formulaire{
+    -fx-background-color:white;
+}
+
+/* ==============================================================
+    Mise en forme des boutons 
+*/
+
+.button {
+   /*-fx-background-color: red;*/
+   -fx-text-fill: white;
+   -fx-text-align: center;
+}
+
+.button:pressed:hover {
+    -fx-background-color: pink;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 );
+}
+
+.button:hover {
+    -fx-background-color: blue;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 );
+}
+
+/* ==============================================================
+    Mise en forme du tableau de visualisation des stages 
+*/
+
+.table-view .column-header,
+.table-view .column-header-background .filler {
+    -fx-background-color: #F9F9F9;
+}
+
+.table-view .column-header {
+    -fx-cell-size: 35;
+    -fx-border-width: 0.25 0.25 1 0.25;
+    -fx-border-color: #EDEDED;
+}
+
+.table-view .column-header .label{
+   -fx-padding: 10 0 10 0;
+}
+
+.table-view .cell{
+    -fx-cell-size: 35;
+}
