@@ -18,20 +18,14 @@ import javafx.scene.control.ChoiceBox;
  */
 public class GestionFXML extends Application
 {
-    @FXML
-    private ChoiceBox<String> debutBox;
-    private String[] mois = {"Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"};
-    
     @Override
     public void start(Stage stage) throws Exception
     {
         Parent root = FXMLLoader.load(getClass().getResource("interface.fxml"));
         
-        //debutBox.getItems().addAll(mois);
-        
         Scene scene = new Scene (root);
         stage.setTitle("Gestion des stages");
-                
+               
         stage.setScene(scene); 
         scene.getStylesheets().add("style.css");
         stage.show();

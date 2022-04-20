@@ -5,7 +5,6 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollBar?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -29,7 +28,7 @@
       <RowConstraints maxHeight="478.19999999999993" minHeight="10.0" prefHeight="58.39999999999998" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <TableView prefHeight="425.0" prefWidth="494.0" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+      <TableView prefHeight="433.0" prefWidth="510.0" GridPane.rowIndex="2" GridPane.valignment="CENTER">
         <columns>
           <TableColumn prefWidth="222.3999900817871" text="Nom de la structure" />
           <TableColumn prefWidth="297.59999084472656" text="Sujet du stage" />
@@ -38,7 +37,7 @@
             <Insets bottom="50.0" left="20.0" />
          </GridPane.margin>
       </TableView>
-      <ChoiceBox prefHeight="28.0" prefWidth="418.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+      <ChoiceBox fx:id="trieBox" prefHeight="28.0" prefWidth="418.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
       <GridPane prefHeight="446.0" prefWidth="338.0" style="-fx-background-color: white;" GridPane.columnIndex="2" GridPane.rowIndex="2">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="307.20001220703125" minWidth="10.0" prefWidth="195.59998779296876" />
@@ -81,7 +80,7 @@
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin></ChoiceBox>
-            <ChoiceBox prefHeight="28.0" prefWidth="159.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3">
+            <ChoiceBox fx:id="dureeBox" prefHeight="28.0" prefWidth="159.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets left="102.0" right="20.0" />
                </GridPane.margin></ChoiceBox>
@@ -89,7 +88,7 @@
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin></ComboBox>
-            <ChoiceBox prefHeight="28.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4">
+            <ChoiceBox fx:id="cibleBox" prefHeight="28.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin></ChoiceBox>
@@ -105,7 +104,6 @@
          </GridPane.margin>
       </Button>
       <Label fx:id="monLabel" prefHeight="18.0" prefWidth="207.0" text="un label vide" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-      <ScrollBar orientation="VERTICAL" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
       <ImageView fitHeight="165.0" fitWidth="775.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER">
          <image>
             <Image url="@bandeau.png" />

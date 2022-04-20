@@ -8,6 +8,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.ChoiceBox;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * Classe SiteController
@@ -16,10 +20,15 @@ import javafx.fxml.FXML;
  * @author SOUDAY Vianney / MESLIN Arthur / FAILLOT Mathew
  * @version 12/04/2022
  */
-public class SiteController
+public class SiteController implements Initializable
 {  
-    @FXML
-    private Label monLabel = new Label("un label vide");
+    @FXML private Label monLabel = new Label("un label vide");
+    
+    // éléments pour les choiceBox
+    @FXML private ChoiceBox<String> debutBox;
+    @FXML private ChoiceBox<String> dureeBox;
+    @FXML private ChoiceBox<String> cibleBox;
+    @FXML private ChoiceBox<String> trieBox;
     
     @FXML
     /**
@@ -27,7 +36,7 @@ public class SiteController
      * permet de valider la modification faites sur les champs d'un stage
      */
     private void modifierClick(ActionEvent event){
-        monLabel.setText("clic sur modifier");
+        monLabel.setText("clic sur modifier\n"+debutBox.getValue());
     }
     
     @FXML
@@ -57,4 +66,20 @@ public class SiteController
         monLabel.setText("clic sur ajouter un stage");
     }
     
+    @Override
+    public void initialize(URL url, ResourceBundle rb)
+    {
+        debutBox.getItems().addAll("Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre");
+        debutBox.setValue("Janvier");
+        
+        dureeBox.getItems().addAll("Jours","Semaines","Mois");
+        dureeBox.setValue("Jours");
+        
+        cibleBox.getItems().addAll("L3","M1","M2");
+        cibleBox.setValue("L3");
+        
+        trieBox.getItems().addAll("Tous les stages", "Uniquement les stages de L3", "Uniquement les stages de M1", "Uniquement les stages de M2");
+        trieBox.setValue("Tous les stages");
+    }
 }
+    
