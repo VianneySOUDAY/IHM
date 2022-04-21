@@ -17,19 +17,17 @@
 */
 
 .button {
-   /*-fx-background-color: red;*/
    -fx-text-fill: white;
    -fx-text-align: center;
 }
 
 .button:pressed:hover {
-    -fx-background-color: pink;
     -fx-text-fill: black;
+    -fx-font-weight: bold;
     -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 );
 }
 
 .button:hover {
-    -fx-background-color: blue;
     -fx-text-fill: white;
     -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 );
 }

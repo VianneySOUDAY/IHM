@@ -40,8 +40,8 @@
       <ChoiceBox fx:id="trieBox" prefHeight="28.0" prefWidth="418.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
       <GridPane prefHeight="446.0" prefWidth="338.0" style="-fx-background-color: white;" GridPane.columnIndex="2" GridPane.rowIndex="2">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="307.20001220703125" minWidth="10.0" prefWidth="195.59998779296876" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="449.60003662109375" minWidth="10.0" prefWidth="314.8000122070313" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="307.20001220703125" minWidth="10.0" prefWidth="201.60001220703126" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="449.60003662109375" minWidth="10.0" prefWidth="314.3999877929688" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="75.60001220703126" minHeight="0.0" prefHeight="31.0" vgrow="SOMETIMES" />
@@ -65,14 +65,11 @@
                <GridPane.margin>
                   <Insets />
                </GridPane.margin></Button>
-            <TextField GridPane.columnIndex="1">
+            <TextField prefHeight="26.0" prefWidth="346.0" promptText="Entrez le nom de l'entreprise" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets right="20.0" />
                </GridPane.margin></TextField>
-            <TextField prefHeight="26.0" prefWidth="223.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <padding>
-                  <Insets right="20.0" />
-               </padding>
+            <TextField prefHeight="44.0" prefWidth="294.0" promptText="Entrez le sujet du stage" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets right="20.0" />
                </GridPane.margin></TextField>
@@ -102,7 +99,7 @@
             </Spinner>
          </children>
       </GridPane>
-      <Button mnemonicParsing="false" onAction="#ajouterClick" prefHeight="30.0" prefWidth="250.0" style="-fx-background-color: blue;" text="Ajouter un stage" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
+      <Button mnemonicParsing="false" onAction="#ajouterClick" prefHeight="30.0" prefWidth="250.0" style="-fx-background-color: blue; -fx-border-color: black;" text="Ajouter un stage" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP">
          <GridPane.margin>
             <Insets bottom="10.0" />
          </GridPane.margin>
@@ -113,5 +110,17 @@
             <Image url="@bandeau.png" />
          </image>
       </ImageView>
+      <Button mnemonicParsing="false" onAction="#popupHelp" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: orange; -fx-border-radius: 100px;" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+         <graphic>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@interrogation.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <GridPane.margin>
+            <Insets top="10.0" />
+         </GridPane.margin>
+      </Button>
    </children>
 </GridPane>

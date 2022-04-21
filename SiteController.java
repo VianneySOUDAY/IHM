@@ -14,6 +14,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.TextField;
+import javax.swing.JOptionPane;
 
 /**
  * Classe SiteController
@@ -32,14 +34,20 @@ public class SiteController implements Initializable
     @FXML private ChoiceBox<String> cibleBox;
     @FXML private ChoiceBox<String> trieBox;
     @FXML private Spinner nombreSpinner;
+    @FXML private TextField nomText;
+    @FXML private TextField sujetText;
+    
     
     @FXML
     /**
      * Methode modifierClick
      * permet de valider la modification faites sur les champs d'un stage
      */
-    private void modifierClick(ActionEvent event){
-        monLabel.setText("clic sur modifier : "+nombreSpinner.getValue());
+    private void modifierClick(ActionEvent event)
+    {
+        String message = nomText.getText();
+        
+        JOptionPane.showMessageDialog(null,message);
     }
     
     @FXML
@@ -47,7 +55,8 @@ public class SiteController implements Initializable
      * Methode supprimerClick
      * permet de supprimer le stage sélectionné
      */
-    private void supprimerClick(ActionEvent event){
+    private void supprimerClick(ActionEvent event)
+    {
         monLabel.setText("clic sur supprimer");
     }
     
@@ -56,7 +65,8 @@ public class SiteController implements Initializable
      * Methode abandonnerClick
      * permet d'abandonné les mofications faites les données d'un stage
      */
-    private void abandonnerClick(ActionEvent event){
+    private void abandonnerClick(ActionEvent event)
+    {
         monLabel.setText("clic sur abandonner");
     }
     
@@ -65,8 +75,22 @@ public class SiteController implements Initializable
      * Methode ajouterClick
      * permet d'ajouter un stage -> remplir le formulaire
      */
-    private void ajouterClick(ActionEvent event){
+    private void ajouterClick(ActionEvent event)
+    {
         monLabel.setText("clic sur ajouter un stage");
+    }
+    
+    @FXML
+    public void popupHelp(ActionEvent event)
+    {
+        String message1 = "Pour AJOUTER un stage : \n Remplissez le formulaire (partie droite de l'écran), puis cliquez sur le bouton [Ajouter un Stage] situé en bas, à gauche \n\n"; 
+        String message2 = "Pour CONSULTER un stage : \n Cliquer sur le stage d'intérêt se trouver dans la liste (à gauche de l'écran)\n\n";
+        String message3 = "Pour MODIFIER un stage : \n Ouvrez le stage à modifier en consultation, modifiez les zones devant être modifiés et cliquez sur le bouton [Modifier]\n\n ";
+        String message4 = "Pour SUPPRIMER un stage : \n Ouvrez le stage à modifier en consultation. Puis, cliquer sur le bouton [Supprimer]";
+        
+        String message = message1 + message2 + message3 + message4;
+        
+        JOptionPane.showMessageDialog(null,message);
     }
     
     @Override
@@ -84,8 +108,9 @@ public class SiteController implements Initializable
         trieBox.getItems().addAll("Tous les stages", "Uniquement les stages de L3", "Uniquement les stages de M1", "Uniquement les stages de M2");
         trieBox.setValue("Tous les stages");
         
-        SpinnerValueFactory<Integer> nombreValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,360,3);
+        SpinnerValueFactory<Integer> nombreValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,360,3); // min=1; max=360; val. par défaut=3
         nombreSpinner.setValueFactory(nombreValueFactory);
+        
     }
 }
     
