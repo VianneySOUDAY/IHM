@@ -16,6 +16,9 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javax.swing.JOptionPane;
+// pour communiquer avec la bdd 
+import java.sql.SQLException;
+import java.sql.ResultSet;
 
 /**
  * Classe SiteController
@@ -45,9 +48,17 @@ public class SiteController implements Initializable
      */
     private void modifierClick(ActionEvent event)
     {
-        String message = nomText.getText();
-        
-        JOptionPane.showMessageDialog(null,message);
+        Connexion connexion = new Connexion("ScriptSQL_IHM.db");
+        connexion.connect();
+        ResultSet resultSet = connexion.query("SELECT * FROM STAGE");
+        try {
+            while (resultSet.next()) {
+                monLabel.setText(resultSet.getString("entreprise"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+         connexion.close();
     }
     
     @FXML

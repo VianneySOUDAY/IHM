@@ -37,42 +37,9 @@ public class GestionFXML extends Application
         scene.getStylesheets().add("style.css");
         stage.show();
         
-        // connexion avec la base de données sur sqlite
-        Class.forName("org.sqlite.JDBC"); //force l'utilisation de la classe
-        DriverManager.registerDriver(new org.sqlite.JDBC()); //enregistre la classe avec le drive DriverManager
-    }
-    
-    /*
-     * Méthode main
-     * pour le jar
-     */
-    public static void main(String[] args) {
-        checkDrivers();    //vérifie si il y a des erreurs de driver
-        Connexion connexion = new Connexion("ScriptSQL_IHM.db");
-        connexion.connect();
-        ResultSet resultSet = connexion.query("SELECT * FROM STAGE");
-        try {
-            while (resultSet.next()) {
-                System.out.println("entreprise : "+resultSet.getString("entreprise"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-         connexion.close();
-    }
-
-    /*
-     * Méthode checkDrivers
-     * utlisé dans le main pour vérifier qu'il n'y ait pas d'erreurs avec le driver 
-     */
-    private static boolean checkDrivers() {
-        try {
-            Class.forName("org.sqlite.JDBC");
-            DriverManager.registerDriver(new org.sqlite.JDBC());
-            return true;
-        } catch (ClassNotFoundException | SQLException classNotFoundException) {
-            Logger.getAnonymousLogger().log(Level.SEVERE, LocalDateTime.now() + ": Could not start SQLite Drivers");
-            return false;
-        }
+        //Connexion connexion = new Connexion("ScriptSQL_IHM.db");
+        //connexion.connect();
+        // tant que fenêtre ouverte....
+        //connexion.close();
     }
 }
