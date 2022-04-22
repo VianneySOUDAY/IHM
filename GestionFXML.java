@@ -14,10 +14,7 @@ import java.sql.SQLException;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 import java.time.LocalDateTime;
-// java JDBC API
-import java.sql.JDBCType;
-
-
+import java.sql.ResultSet;
 
 /**
  * Classe GestionFXML
@@ -51,6 +48,17 @@ public class GestionFXML extends Application
      */
     public static void main(String[] args) {
         checkDrivers();    //vérifie si il y a des erreurs de driver
+        Connexion connexion = new Connexion("ScriptSQL_IHM.db");
+        connexion.connect();
+        ResultSet resultSet = connexion.query("SELECT * FROM STAGE");
+        try {
+            while (resultSet.next()) {
+                System.out.println("entreprise : "+resultSet.getString("entreprise"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+         connexion.close();
     }
 
     /*
