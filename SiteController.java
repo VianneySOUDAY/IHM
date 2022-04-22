@@ -37,7 +37,7 @@ public class SiteController implements Initializable
     @FXML private ChoiceBox<String> dureeBox;
     @FXML private ChoiceBox<String> cibleBox;
     @FXML private ChoiceBox<String> trieBox;
-    @FXML private Spinner nombreSpinner;
+    @FXML private Spinner<Integer> nombreSpinner;
     @FXML private TextField nomText;
     @FXML private TextField sujetText;
     
@@ -93,14 +93,13 @@ public class SiteController implements Initializable
         connexion.connect();
         try {
             PreparedStatement preparedStatement = Connexion.getConnection()
-                .prepareStatement("INSERT INTO STAGE VALUES(?,?,?,?,?,?,?)");
-            preparedStatement.setInt(1, 2);         // id
-            preparedStatement.setString(2, "Oril"); // entrerpise
-            preparedStatement.setString(3, "DDSI"); // sujet
-            preparedStatement.setString(4, "Mai");  // debut
-            preparedStatement.setInt(5, 3);         // duree nombre
-            preparedStatement.setString(6, "Mois"); // duree Unité
-            preparedStatement.setString(7, "M1");   // promotion cible
+                .prepareStatement("INSERT INTO STAGE(entreprise,sujet,debutStage,dureeNb,dureeUnite,promotion) VALUES(?,?,?,?,?,?)");
+            preparedStatement.setString(1, "SopraSteria"); // entrerpise
+            preparedStatement.setString(2, "DDSI"); // sujet
+            preparedStatement.setString(3, debutBox.getValue());   // debut
+            preparedStatement.setInt(4, nombreSpinner.getValue()); // duree nombre
+            preparedStatement.setString(5, dureeBox.getValue());   // duree Unité
+            preparedStatement.setString(6, cibleBox.getValue());   // promotion cible
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
