@@ -7,6 +7,8 @@ import javafx.stage.Stage;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
+import javafx.collections.ObservableList;
+import java.util.ArrayList;
 
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
@@ -16,8 +18,17 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javax.swing.JOptionPane;
-import javafx.scene.control.TextArea;
 
+import java.io.File;
+import java.net.URISyntaxException;
+import javafx.collections.*;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javafx.scene.control.TextArea;
+import java.sql.*;
+import java.time.LocalDateTime;
 // pour remplir les box
 import javafx.fxml.Initializable;
 import java.net.URL;
@@ -28,6 +39,7 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import javafx.scene.control.cell.PropertyValueFactory; // pour remplir un TableView
+
 
 /**
  * Classe SiteController
@@ -44,13 +56,16 @@ public class SiteController implements Initializable
     @FXML private ChoiceBox<String> dureeBox;
     @FXML private ChoiceBox<String> cibleBox;
     @FXML private ChoiceBox<String> trieBox;
+    
+    private ObservableList<StageGphy> data;
+    
     @FXML private Spinner<Integer> nombreSpinner;
     @FXML private TextArea nomText;
     @FXML private TextArea sujetText;
-    
-    @FXML private TableView<Stage> stagesTable;
-    @FXML private TableColumn<Stage,String> sujetStage;
-    @FXML private TableColumn<Stage,String> nomEntreprise;
+
+    @FXML private TableView<StageGphy> stagesTable;
+    @FXML private TableColumn<StageGphy,String> sujetStage;
+    @FXML private TableColumn<StageGphy,String> nomEntreprise;
     
     StageGphy unStage; 
     
@@ -132,7 +147,7 @@ public class SiteController implements Initializable
         JOptionPane.showMessageDialog(null,message);
     }
     
-    @Override
+   @Override
     public void initialize(URL url, ResourceBundle rb)
     {
         debutBox.getItems().addAll("Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre");
@@ -151,18 +166,26 @@ public class SiteController implements Initializable
         nombreSpinner.setValueFactory(nombreValueFactory);
         
         // remplissage de TableView
-        nomEntreprise.setCellValueFactory(new PropertyValueFactory<Stage,String>("nomEntreprise"));
-        sujetStage.setCellValueFactory(new PropertyValueFactory<Stage,String>("sujetStage"));
+        nomEntreprise.setCellValueFactory(new PropertyValueFactory<StageGphy,String>("nomEntreprise"));
+        sujetStage.setCellValueFactory(new PropertyValueFactory<StageGphy,String>("sujetStage"));
         Connexion connexion = new Connexion("ScriptSQL_IHM.db");
         connexion.connect();
         ResultSet resultSet = connexion.query("SELECT * FROM STAGE");
+        data = FXCollections.observableArrayList();
+        
         
         try {
             while (resultSet.next()) {
                 unStage = new StageGphy(resultSet.getString("entreprise"), resultSet.getString("sujet"));
-                sujetStage.setCellValueFactory(new PropertyValueFactory<Stage,String>("sujetStage"));
+                sujetStage.setCellValueFactory(new PropertyValueFactory<StageGphy,String>("sujetStage"));
+                
                 stagesTable.getItems();
+                data.add(unStage);
+                
+                
             }
+            stagesTable.setItems(data);
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }
