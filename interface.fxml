@@ -28,10 +28,10 @@
       <RowConstraints maxHeight="478.19999999999993" minHeight="10.0" prefHeight="58.39999999999998" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <TableView prefHeight="433.0" prefWidth="510.0" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+      <TableView fx:id="stagesTable" prefHeight="433.0" prefWidth="510.0" GridPane.rowIndex="2" GridPane.valignment="CENTER">
         <columns>
-          <TableColumn prefWidth="222.3999900817871" text="Nom de la structure" />
-          <TableColumn prefWidth="297.59999084472656" text="Sujet du stage" />
+          <TableColumn fx:id="nomEntreprise" editable="false" prefWidth="255.2000732421875" text="Nom de l'entreprise" />
+          <TableColumn fx:id="sujetStage" editable="false" prefWidth="264.7999267578125" text="Sujet du stage" />
         </columns>
          <GridPane.margin>
             <Insets bottom="50.0" left="20.0" />

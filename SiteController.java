@@ -5,6 +5,8 @@ import javafx.scene.Scene;
 import javafx.geometry.Insets;
 import javafx.stage.Stage;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TableColumn;
 
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
@@ -25,6 +27,7 @@ import java.util.ResourceBundle;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
+import javafx.scene.control.cell.PropertyValueFactory; // pour remplir un TableView
 
 /**
  * Classe SiteController
@@ -45,6 +48,11 @@ public class SiteController implements Initializable
     @FXML private TextArea nomText;
     @FXML private TextArea sujetText;
     
+    @FXML private TableView<Stage> stagesTable;
+    @FXML private TableColumn<Stage,String> sujetStage;
+    @FXML private TableColumn<Stage,String> nomEntreprise;
+    
+    StageGphy unStage; 
     
     @FXML
     /**
@@ -141,6 +149,24 @@ public class SiteController implements Initializable
         
         SpinnerValueFactory<Integer> nombreValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,360,3); // min=1; max=360; val. par défaut=3
         nombreSpinner.setValueFactory(nombreValueFactory);
+        
+        // remplissage de TableView
+        nomEntreprise.setCellValueFactory(new PropertyValueFactory<Stage,String>("nomEntreprise"));
+        sujetStage.setCellValueFactory(new PropertyValueFactory<Stage,String>("sujetStage"));
+        Connexion connexion = new Connexion("ScriptSQL_IHM.db");
+        connexion.connect();
+        ResultSet resultSet = connexion.query("SELECT * FROM STAGE");
+        
+        try {
+            while (resultSet.next()) {
+                unStage = new StageGphy(resultSet.getString("entreprise"), resultSet.getString("sujet"));
+                sujetStage.setCellValueFactory(new PropertyValueFactory<Stage,String>("sujetStage"));
+                stagesTable.getItems();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+         connexion.close();
         
     }
 }
