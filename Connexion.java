@@ -14,7 +14,7 @@ import java.sql.ResultSet;
 public class Connexion 
 {
    private String DBPath = "ScriptSQL_IHM.db";
-   private Connection connection = null;
+   private static Connection connection = null;
    private Statement statement = null;
  
    public Connexion(String dBPath) 
@@ -61,7 +61,8 @@ public class Connexion
     * @parm requête
     * @return objet de type ReslutSet
     */
-    public ResultSet query(String requet) {
+    public ResultSet query(String requet) 
+    {
        ResultSet resultat = null;
        try {
            resultat = statement.executeQuery(requet);
@@ -70,6 +71,10 @@ public class Connexion
            System.out.println("Erreur dans la requet : " + requet);
        }
        return resultat;
- 
+   }
+   
+   public static Connection getConnection()
+   {
+    return connection;   
    }
 }

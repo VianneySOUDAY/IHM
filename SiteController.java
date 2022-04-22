@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 // pour communiquer avec la bdd 
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.sql.PreparedStatement;
 
 /**
  * Classe SiteController
@@ -88,7 +89,23 @@ public class SiteController implements Initializable
      */
     private void ajouterClick(ActionEvent event)
     {
-        monLabel.setText("clic sur ajouter un stage");
+        Connexion connexion = new Connexion("ScriptSQL_IHM.db");
+        connexion.connect();
+        try {
+            PreparedStatement preparedStatement = Connexion.getConnection()
+                .prepareStatement("INSERT INTO STAGE VALUES(?,?,?,?,?,?,?)");
+            preparedStatement.setInt(1, 2);         // id
+            preparedStatement.setString(2, "Oril"); // entrerpise
+            preparedStatement.setString(3, "DDSI"); // sujet
+            preparedStatement.setString(4, "Mai");  // debut
+            preparedStatement.setInt(5, 3);         // duree nombre
+            preparedStatement.setString(6, "Mois"); // duree Unité
+            preparedStatement.setString(7, "M1");   // promotion cible
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+         connexion.close();
     }
     
     @FXML
