@@ -42,7 +42,7 @@ public class SiteController implements Initializable
     @FXML private ChoiceBox<String> cibleBox;
     @FXML private ChoiceBox<String> trieBox;
     @FXML private Spinner<Integer> nombreSpinner;
-    @FXML private TextField nomText;
+    @FXML private TextArea nomText;
     @FXML private TextArea sujetText;
     
     
@@ -98,8 +98,8 @@ public class SiteController implements Initializable
         try {
             PreparedStatement preparedStatement = Connexion.getConnection()
                 .prepareStatement("INSERT INTO STAGE(entreprise,sujet,debutStage,dureeNb,dureeUnite,promotion) VALUES(?,?,?,?,?,?)");
-            preparedStatement.setString(1, "SopraSteria"); // entrerpise
-            preparedStatement.setString(2, "DDSI"); // sujet
+            preparedStatement.setString(1, nomText.getText()); // entrerpise
+            preparedStatement.setString(2, sujetText.getText()); // sujet
             preparedStatement.setString(3, debutBox.getValue());   // debut
             preparedStatement.setInt(4, nombreSpinner.getValue()); // duree nombre
             preparedStatement.setString(5, dureeBox.getValue());   // duree Unité
