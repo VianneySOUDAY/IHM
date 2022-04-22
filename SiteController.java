@@ -3,19 +3,24 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+
+import javafx.scene.layout.GridPane;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ChoiceBox;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javax.swing.JOptionPane;
+import javafx.scene.control.TextArea;
+
+// pour remplir les box
+import javafx.fxml.Initializable;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 // pour communiquer avec la bdd 
 import java.sql.SQLException;
 import java.sql.ResultSet;
@@ -26,20 +31,19 @@ import java.sql.PreparedStatement;
  * Permet d'interragir avec la fenêtre : donne des actions aux boutons.
  * 
  * @author SOUDAY Vianney / MESLIN Arthur / FAILLOT Mathew
- * @version 12/04/2022
+ * @version 22/04/2022
  */
 public class SiteController implements Initializable
 {  
     @FXML private Label monLabel = new Label("un label vide");
     
-    // éléments pour les choiceBox
     @FXML private ChoiceBox<String> debutBox;
     @FXML private ChoiceBox<String> dureeBox;
     @FXML private ChoiceBox<String> cibleBox;
     @FXML private ChoiceBox<String> trieBox;
     @FXML private Spinner<Integer> nombreSpinner;
     @FXML private TextField nomText;
-    @FXML private TextField sujetText;
+    @FXML private TextArea sujetText;
     
     
     @FXML

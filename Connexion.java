@@ -73,6 +73,10 @@ public class Connexion
        return resultat;
    }
    
+   /*
+    * Méthode getConnection
+    * Permet de récupérer connection
+    */
    public static Connection getConnection()
    {
     return connection;   

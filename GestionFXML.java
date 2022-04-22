@@ -21,7 +21,7 @@ import java.sql.ResultSet;
  * Permet de creer notre fenêtre à partir du fichier .FXML
  * 
  * @author SOUDAY Vianney / MESLIN Arthur / FAILLOT Mathew
- * @version 05/04/2022
+ * @version 22/04/2022
  */
 public class GestionFXML extends Application
 {
@@ -36,10 +36,5 @@ public class GestionFXML extends Application
         stage.setScene(scene); 
         scene.getStylesheets().add("style.css");
         stage.show();
-        
-        //Connexion connexion = new Connexion("ScriptSQL_IHM.db");
-        //connexion.connect();
-        // tant que fenêtre ouverte....
-        //connexion.close();
     }
 }
