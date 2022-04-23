@@ -220,15 +220,17 @@ public class SiteController implements Initializable
        stagesTable.setOnMouseClicked((event)->{
            StageGphy stag = stagesTable.getSelectionModel().getSelectedItem();
            if (stag!=null){
-           String nom = ".";
-           nom = stag.getNomEntreprise();
-           if (nomText != null){nomText.setText(nom);}
-           
-           sujetText.setText(stag.getSujetStage());
-           debutBox.setValue(stag.getDebutStage());
-           dureeBox.setValue(stag.getDureeUnite());
-           cibleBox.setValue(stag.getPromotion());
-       }
+               String nom = ".";
+               nom = stag.getNomEntreprise();
+               if (nomText != null){nomText.setText(nom);}
+               
+               sujetText.setText(stag.getSujetStage());
+               debutBox.setValue(stag.getDebutStage());
+               SpinnerValueFactory<Integer> dureeValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,360,stag.getDuree()); // min=1; max=360; val. par défaut=3
+               nombreSpinner.setValueFactory(dureeValueFactory);
+               dureeBox.setValue(stag.getDureeUnite());
+               cibleBox.setValue(stag.getPromotion());
+           }
        });
        connexion.close();
        
