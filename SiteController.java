@@ -50,195 +50,188 @@ import javafx.scene.control.cell.PropertyValueFactory; // pour remplir un TableV
  */
 public class SiteController implements Initializable
 {  
-    @FXML private Label monLabel = new Label("un label vide");
+   @FXML private Label monLabel = new Label("un label vide");
+   
+   @FXML private ChoiceBox<String> debutBox;
+   @FXML private ChoiceBox<String> dureeBox;
+   @FXML private ChoiceBox<String> cibleBox;
+   @FXML private ChoiceBox<String> trieBox;
+   
+   private ObservableList<StageGphy> data;
+   
+   @FXML private Spinner<Integer> nombreSpinner;
+   @FXML private TextArea nomText;
+   @FXML private TextArea sujetText;
+   @FXML private TableView<StageGphy> stagesTable;
+   @FXML private TableColumn<StageGphy,String> sujetStage;
+   @FXML private TableColumn<StageGphy,String> nomEntreprise;
+   
+   StageGphy unStage; 
     
-    @FXML private ChoiceBox<String> debutBox;
-    @FXML private ChoiceBox<String> dureeBox;
-    @FXML private ChoiceBox<String> cibleBox;
-    @FXML private ChoiceBox<String> trieBox;
+   @FXML
+   /**
+    * Methode modifierClick
+    * permet de valider la modification faites sur les champs d'un stage
+    */
+   private void modifierClick(ActionEvent event)
+   {
+       Connexion connexion = new Connexion("ScriptSQL_IHM.db");
+       connexion.connect();
+       ResultSet resultSet = connexion.query("SELECT * FROM STAGE");
+       try {
+           while (resultSet.next()) {
+               monLabel.setText(resultSet.getString("entreprise"));
+           }
+       } catch (SQLException e) {
+           e.printStackTrace();
+       }
+       connexion.close();
+   }
     
-    private ObservableList<StageGphy> data;
+   @FXML
+   /**
+    * Methode supprimerClick
+    * permet de supprimer le stage sélectionné
+    */
+   private void supprimerClick(ActionEvent event)
+   {
+       monLabel.setText("clic sur supprimer");
+   }
+   
+   @FXML
+   /**
+    * Methode abandonnerClick
+    * permet d'abandonné les mofications faites les données d'un stage
+    */
+   private void abandonnerClick(ActionEvent event)
+   {
+       monLabel.setText("clic sur abandonner");
+   }
+   
+   @FXML
+   /**
+    * Methode ajouterClick
+    * permet d'ajouter un stage -> remplir le formulaire
+    */
+   private void ajouterClick(ActionEvent event)
+   {
+       Connexion connexion = new Connexion("ScriptSQL_IHM.db");
+       connexion.connect();
+       // on place le stage dans la base de donnée
+       try {
+           PreparedStatement preparedStatement = Connexion.getConnection()
+               .prepareStatement("INSERT INTO STAGE(entreprise,sujet,debutStage,dureeNb,dureeUnite,promotion) VALUES(?,?,?,?,?,?)");
+           preparedStatement.setString(1, nomText.getText()); // entrerpise
+           preparedStatement.setString(2, sujetText.getText()); // sujet
+           preparedStatement.setString(3, debutBox.getValue());   // debut
+           preparedStatement.setInt(4, nombreSpinner.getValue()); // duree nombre
+           preparedStatement.setString(5, dureeBox.getValue());   // duree Unité
+           preparedStatement.setString(6, cibleBox.getValue());   // promotion cible
+           preparedStatement.executeUpdate();
+       } catch (SQLException e) {
+           e.printStackTrace();
+       }
+       // on met à jour l'affichage de la TableView
+       String choice = trieBox.getValue();
+       GetStage(choice, connexion);
+       connexion.close();
+   }
     
-    @FXML private Spinner<Integer> nombreSpinner;
-    @FXML private TextArea nomText;
-    @FXML private TextArea sujetText;
-
-    @FXML private TableView<StageGphy> stagesTable;
-    @FXML private TableColumn<StageGphy,String> sujetStage;
-    @FXML private TableColumn<StageGphy,String> nomEntreprise;
-    
-    StageGphy unStage; 
-    
-    @FXML
-    /**
-     * Methode modifierClick
-     * permet de valider la modification faites sur les champs d'un stage
-     */
-    private void modifierClick(ActionEvent event)
-    {
-        Connexion connexion = new Connexion("ScriptSQL_IHM.db");
-        connexion.connect();
-        ResultSet resultSet = connexion.query("SELECT * FROM STAGE");
-        try {
-            while (resultSet.next()) {
-                monLabel.setText(resultSet.getString("entreprise"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-         connexion.close();
-    }
-    
-    @FXML
-    /**
-     * Methode supprimerClick
-     * permet de supprimer le stage sélectionné
-     */
-    private void supprimerClick(ActionEvent event)
-    {
-        monLabel.setText("clic sur supprimer");
-    }
-    
-    @FXML
-    /**
-     * Methode abandonnerClick
-     * permet d'abandonné les mofications faites les données d'un stage
-     */
-    private void abandonnerClick(ActionEvent event)
-    {
-        monLabel.setText("clic sur abandonner");
-    }
-    
-    @FXML
-    /**
-     * Methode ajouterClick
-     * permet d'ajouter un stage -> remplir le formulaire
-     */
-    private void ajouterClick(ActionEvent event)
-    {
-        Connexion connexion = new Connexion("ScriptSQL_IHM.db");
-        connexion.connect();
-        try {
-            PreparedStatement preparedStatement = Connexion.getConnection()
-                .prepareStatement("INSERT INTO STAGE(entreprise,sujet,debutStage,dureeNb,dureeUnite,promotion) VALUES(?,?,?,?,?,?)");
-            preparedStatement.setString(1, nomText.getText()); // entrerpise
-            preparedStatement.setString(2, sujetText.getText()); // sujet
-            preparedStatement.setString(3, debutBox.getValue());   // debut
-            preparedStatement.setInt(4, nombreSpinner.getValue()); // duree nombre
-            preparedStatement.setString(5, dureeBox.getValue());   // duree Unité
-            preparedStatement.setString(6, cibleBox.getValue());   // promotion cible
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-         connexion.close();
-    }
-    
-    @FXML
-    public void popupHelp(ActionEvent event)
-    {
-        String message1 = "Pour AJOUTER un stage : \n Remplissez le formulaire (partie droite de l'écran), puis cliquez sur le bouton [Ajouter un Stage] situé en bas, à gauche \n\n"; 
-        String message2 = "Pour CONSULTER un stage : \n Cliquer sur le stage d'intérêt se trouver dans la liste (à gauche de l'écran)\n\n";
-        String message3 = "Pour MODIFIER un stage : \n Ouvrez le stage à modifier en consultation, modifiez les zones devant être modifiés et cliquez sur le bouton [Modifier]\n\n ";
-        String message4 = "Pour SUPPRIMER un stage : \n Ouvrez le stage à modifier en consultation. Puis, cliquer sur le bouton [Supprimer]";
+   @FXML
+   public void popupHelp(ActionEvent event)
+   {
+       String message1 = "Pour AJOUTER un stage : \n Remplissez le formulaire (partie droite de l'écran), puis cliquez sur le bouton [Ajouter un Stage] situé en bas, à gauche \n\n"; 
+       String message2 = "Pour CONSULTER un stage : \n Cliquer sur le stage d'intérêt se trouver dans la liste (à gauche de l'écran)\n\n";
+       String message3 = "Pour MODIFIER un stage : \n Ouvrez le stage à modifier en consultation, modifiez les zones devant être modifiés et cliquez sur le bouton [Modifier]\n\n ";
+       String message4 = "Pour SUPPRIMER un stage : \n Ouvrez le stage à modifier en consultation. Puis, cliquer sur le bouton [Supprimer]";
+       
+       String message = message1 + message2 + message3 + message4;
+       
+       JOptionPane.showMessageDialog(null,message);
+   }
         
-        String message = message1 + message2 + message3 + message4;
-        
-        JOptionPane.showMessageDialog(null,message);
-    }
-    
-    
-    public void GetStage(String choice, Connexion connexion){
-        connexion.connect();
-        ResultSet resultSet = connexion.query("SELECT * FROM STAGE;");
-        if (choice == "Uniquement les stages de L3"){
-        resultSet = connexion.query("SELECT * FROM STAGE where (promotion ='L3')");
-	}
-	else if (choice == "Uniquement les stages de M1"){
-        resultSet = connexion.query("SELECT * FROM STAGE where (promotion ='M1')");
-	}
-	else if (choice == "Uniquement les stages de M2"){
-        resultSet = connexion.query("SELECT * FROM STAGE where (promotion ='M2')");
-	}
-
-        data = FXCollections.observableArrayList();
-        
-        
-        try {
-            while (resultSet.next()) {
-                unStage = new StageGphy(resultSet.getString("entreprise"), resultSet.getString("sujet"), resultSet.getString("debutStage"),resultSet.getInt("dureeNb"),
-                resultSet.getString("dureeUnite"), resultSet.getString("promotion"));
-                sujetStage.setCellValueFactory(new PropertyValueFactory<StageGphy,String>("sujetStage"));
-                
-                stagesTable.getItems();
-                data.add(unStage);
-                
-                
-            }
-            stagesTable.setItems(data);
+   public void GetStage(String choice, Connexion connexion){
+       connexion.connect();
+       ResultSet resultSet = connexion.query("SELECT * FROM STAGE;");
+       if (choice == "Uniquement les stages de L3"){
+       resultSet = connexion.query("SELECT * FROM STAGE where (promotion ='L3')");
+       }
+       else if (choice == "Uniquement les stages de M1"){
+           resultSet = connexion.query("SELECT * FROM STAGE where (promotion ='M1')");
+       }
+       else if (choice == "Uniquement les stages de M2"){
+           resultSet = connexion.query("SELECT * FROM STAGE where (promotion ='M2')");
+       }
+       data = FXCollections.observableArrayList();
             
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        connexion.close();
+       try {
+           while (resultSet.next()) {
+               unStage = new StageGphy(resultSet.getString("entreprise"), resultSet.getString("sujet"), resultSet.getString("debutStage"),resultSet.getInt("dureeNb"),
+               resultSet.getString("dureeUnite"), resultSet.getString("promotion"));
+               sujetStage.setCellValueFactory(new PropertyValueFactory<StageGphy,String>("sujetStage"));
+               
+               stagesTable.getItems();
+               data.add(unStage);
+               
+                
+           }
+           stagesTable.setItems(data);
+            
+       } catch (SQLException e) {
+           e.printStackTrace();
+       }
+       connexion.close();
         
-    }
-    
-    
-    
+   }
     
    @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
-        debutBox.getItems().addAll("Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre");
-        debutBox.setValue("Mai");
-        
-        dureeBox.getItems().addAll("Jours","Semaines","Mois");
-        dureeBox.setValue("Mois");
-        
-        cibleBox.getItems().addAll("L3","M1","M2");
-        cibleBox.setValue("L3");
-        
-        trieBox.getItems().addAll("Tous les stages", "Uniquement les stages de L3", "Uniquement les stages de M1", "Uniquement les stages de M2");
-        trieBox.setValue("Tous les stages");
-        
-        SpinnerValueFactory<Integer> nombreValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,360,3); // min=1; max=360; val. par défaut=3
-        nombreSpinner.setValueFactory(nombreValueFactory);
-        
-        // remplissage de TableView
-        nomEntreprise.setCellValueFactory(new PropertyValueFactory<StageGphy,String>("nomEntreprise"));
-        sujetStage.setCellValueFactory(new PropertyValueFactory<StageGphy,String>("sujetStage"));
-        Connexion connexion = new Connexion("ScriptSQL_IHM.db");
-        connexion.connect();
-        String choice = trieBox.getValue();
-        GetStage(choice, connexion);
-        
-        trieBox.setOnAction((event)->{
-        String choice2 = trieBox.getValue();
-        GetStage(choice2, connexion);
-        
-        
-        });
-        
-        stagesTable.setOnMouseClicked((event)->{
-        StageGphy stag = stagesTable.getSelectionModel().getSelectedItem();
-        if (stag!=null){
-        //System.out.println(stag.getNomEntreprise());  
-        String nom = ".";
-        nom = stag.getNomEntreprise();
-        if (nomText != null){
-        nomText.setText(nom);
-    }
-        sujetText.setText(stag.getSujetStage());
-        debutBox.setValue(stag.getDebutStage());
-        dureeBox.setValue(stag.getDureeUnite());
-        cibleBox.setValue(stag.getPromotion());
-        
-        
-        }
-        });
-        connexion.close();
-        
-    }
+   public void initialize(URL url, ResourceBundle rb)
+   {
+       debutBox.getItems().addAll("Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre");
+       debutBox.setValue("Mai");
+       
+       dureeBox.getItems().addAll("Jours","Semaines","Mois");
+       dureeBox.setValue("Mois");
+       
+       cibleBox.getItems().addAll("L3","M1","M2");
+       cibleBox.setValue("L3");
+       
+       trieBox.getItems().addAll("Tous les stages", "Uniquement les stages de L3", "Uniquement les stages de M1", "Uniquement les stages de M2");
+       trieBox.setValue("Tous les stages");
+       
+       SpinnerValueFactory<Integer> nombreValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,360,3); // min=1; max=360; val. par défaut=3
+       nombreSpinner.setValueFactory(nombreValueFactory);
+       
+       // remplissage de TableView
+       nomEntreprise.setCellValueFactory(new PropertyValueFactory<StageGphy,String>("nomEntreprise"));
+       sujetStage.setCellValueFactory(new PropertyValueFactory<StageGphy,String>("sujetStage"));
+       Connexion connexion = new Connexion("ScriptSQL_IHM.db");
+       connexion.connect();
+       String choice = trieBox.getValue();
+       GetStage(choice, connexion);
+       
+       // Trie des stages à afficher dans la TableView
+       trieBox.setOnAction((event)->{
+           String choice2 = trieBox.getValue();
+           GetStage(choice2, connexion);
+       });
+       
+       // Remplissage du form quand on clique sur un stage dans la TableView
+       stagesTable.setOnMouseClicked((event)->{
+           StageGphy stag = stagesTable.getSelectionModel().getSelectedItem();
+           if (stag!=null){
+           String nom = ".";
+           nom = stag.getNomEntreprise();
+           if (nomText != null){nomText.setText(nom);}
+           
+           sujetText.setText(stag.getSujetStage());
+           debutBox.setValue(stag.getDebutStage());
+           dureeBox.setValue(stag.getDureeUnite());
+           cibleBox.setValue(stag.getPromotion());
+       }
+       });
+       connexion.close();
+       
+   }
 }
     
