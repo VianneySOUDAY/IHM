@@ -147,6 +147,46 @@ public class SiteController implements Initializable
         JOptionPane.showMessageDialog(null,message);
     }
     
+    
+    public void GetStage(String choice, Connexion connexion){
+        connexion.connect();
+        ResultSet resultSet = connexion.query("SELECT * FROM STAGE;");
+        if (choice == "Uniquement les stages de L3"){
+        resultSet = connexion.query("SELECT * FROM STAGE where (promotion ='L3')");
+	}
+	else if (choice == "Uniquement les stages de M1"){
+        resultSet = connexion.query("SELECT * FROM STAGE where (promotion ='M1')");
+	}
+	else if (choice == "Uniquement les stages de M2"){
+        resultSet = connexion.query("SELECT * FROM STAGE where (promotion ='M2')");
+	}
+
+        data = FXCollections.observableArrayList();
+        
+        
+        try {
+            while (resultSet.next()) {
+                unStage = new StageGphy(resultSet.getString("entreprise"), resultSet.getString("sujet"), resultSet.getString("debutStage"),resultSet.getInt("dureeNb"),
+                resultSet.getString("dureeUnite"), resultSet.getString("promotion"));
+                sujetStage.setCellValueFactory(new PropertyValueFactory<StageGphy,String>("sujetStage"));
+                
+                stagesTable.getItems();
+                data.add(unStage);
+                
+                
+            }
+            stagesTable.setItems(data);
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        connexion.close();
+        
+    }
+    
+    
+    
+    
    @Override
     public void initialize(URL url, ResourceBundle rb)
     {
@@ -170,26 +210,34 @@ public class SiteController implements Initializable
         sujetStage.setCellValueFactory(new PropertyValueFactory<StageGphy,String>("sujetStage"));
         Connexion connexion = new Connexion("ScriptSQL_IHM.db");
         connexion.connect();
-        ResultSet resultSet = connexion.query("SELECT * FROM STAGE");
-        data = FXCollections.observableArrayList();
+        String choice = trieBox.getValue();
+        GetStage(choice, connexion);
+        
+        trieBox.setOnAction((event)->{
+        String choice2 = trieBox.getValue();
+        GetStage(choice2, connexion);
         
         
-        try {
-            while (resultSet.next()) {
-                unStage = new StageGphy(resultSet.getString("entreprise"), resultSet.getString("sujet"));
-                sujetStage.setCellValueFactory(new PropertyValueFactory<StageGphy,String>("sujetStage"));
-                
-                stagesTable.getItems();
-                data.add(unStage);
-                
-                
-            }
-            stagesTable.setItems(data);
-            
-        } catch (SQLException e) {
-            e.printStackTrace();
+        });
+        
+        stagesTable.setOnMouseClicked((event)->{
+        StageGphy stag = stagesTable.getSelectionModel().getSelectedItem();
+        if (stag!=null){
+        //System.out.println(stag.getNomEntreprise());  
+        String nom = ".";
+        nom = stag.getNomEntreprise();
+        if (nomText != null){
+        nomText.setText(nom);
+    }
+        sujetText.setText(stag.getSujetStage());
+        debutBox.setValue(stag.getDebutStage());
+        dureeBox.setValue(stag.getDureeUnite());
+        cibleBox.setValue(stag.getPromotion());
+        
+        
         }
-         connexion.close();
+        });
+        connexion.close();
         
     }
 }

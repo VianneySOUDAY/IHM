@@ -10,13 +10,32 @@ public class StageGphy
 {
     String nomEntreprise;
     String sujetStage;
-    
-    public StageGphy(String nomEntreprise, String sujetStage)
+    String debutStage;
+    int duree;
+    String dureeUnite;
+    String promotion;
+    public StageGphy(String nomEntreprise, String sujetStage, String debutStage, int duree, String dureeUnite, String promotion)
     {
         this.nomEntreprise = nomEntreprise;
         this.sujetStage = sujetStage;
+        this.debutStage = debutStage;
+        this.duree = duree;
+        this.dureeUnite = dureeUnite;
+        this.promotion = promotion;
+        
     } 
-    
+    public String getDebutStage(){
+        return debutStage;
+    }
+    public int getDuree(){
+        return duree;
+    }
+    public String getDureeUnite(){
+        return dureeUnite;
+    }
+    public String getPromotion(){
+        return promotion;
+    }
     public String getNomEntreprise()
     {
         return nomEntreprise;
