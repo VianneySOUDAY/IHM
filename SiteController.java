@@ -130,7 +130,25 @@ public class SiteController implements Initializable
     */
    private void abandonnerClick(ActionEvent event)
    {
-       monLabel.setText("clic sur abandonner");
+    Connexion connexion = new Connexion("ScriptSQL_IHM.db");
+    connexion.connect();
+        
+    StageGphy stag = stagesTable.getSelectionModel().getSelectedItem();
+        
+    if (stag!=null){
+        String nom = ".";
+        nom = stag.getNomEntreprise();
+        if (nomText != null){nomText.setText(nom);}
+        sujetText.setText(stag.getSujetStage());
+        debutBox.setValue(stag.getDebutStage());
+        SpinnerValueFactory<Integer> dureeValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,360,stag.getDuree()); // min=1; max=360; val. par défaut=3
+        nombreSpinner.setValueFactory(dureeValueFactory);
+        dureeBox.setValue(stag.getDureeUnite());
+        cibleBox.setValue(stag.getPromotion());
+        String choice = trieBox.getValue();
+        GetStage(choice, connexion);
+    }
+    connexion.close();
    }
    
    @FXML
