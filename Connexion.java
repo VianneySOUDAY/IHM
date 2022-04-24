@@ -16,13 +16,18 @@ public class Connexion
    private String DBPath = "ScriptSQL_IHM.db";
    private static Connection connection = null;
    private Statement statement = null;
- 
+   
+   /**
+    * Constructeur Connexion
+    * contient le chemin vers la base de données
+    * @param dBPath
+    */
    public Connexion(String dBPath) 
    {
        DBPath = dBPath;
    }
     
-   /*
+   /**
     * Méthode connect
     * permet de se connecter à la base de données
     */
@@ -42,7 +47,7 @@ public class Connexion
        }
    }
     
-   /*
+   /**
     * Méthode close
     * Permet de rompre la connexion avec la base de données
     */
@@ -56,8 +61,9 @@ public class Connexion
        }
    }
 
-   /*
+   /**
     * Méthode query
+    * permet d'exécuter une requête SQL sur la base de données.
     * @parm requête
     * @return objet de type ReslutSet
     */
@@ -73,7 +79,7 @@ public class Connexion
        return resultat;
    }
    
-   /*
+   /**
     * Méthode getConnection
     * Permet de récupérer connection
     */

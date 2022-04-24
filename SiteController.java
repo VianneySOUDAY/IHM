@@ -47,12 +47,10 @@ import javafx.scene.control.cell.PropertyValueFactory; // pour remplir un TableV
  * Permet d'interragir avec la fenêtre : donne des actions aux boutons.
  * 
  * @author SOUDAY Vianney / MESLIN Arthur / FAILLOT Mathew
- * @version 22/04/2022
+ * @version 24/04/2022
  */
 public class SiteController implements Initializable
-{  
-   @FXML private Label monLabel = new Label("un label vide");
-   
+{   
    @FXML private ChoiceBox<String> debutBox;
    @FXML private ChoiceBox<String> dureeBox;
    @FXML private ChoiceBox<String> cibleBox;
@@ -71,8 +69,6 @@ public class SiteController implements Initializable
    StageGphy precStage;
    TableView.TableViewSelectionModel precSelec;
   
-   
-    
    @FXML
    /**
     * Methode modifierClick
@@ -81,58 +77,50 @@ public class SiteController implements Initializable
    private void modifierClick(ActionEvent event)
    {
        Connexion connexion = new Connexion("ScriptSQL_IHM.db");
-    connexion.connect();
-        
-        
-        
-        StageGphy stag = stagesTable.getSelectionModel().getSelectedItem();
-        if (stag != null){
-        precStage = stag;
-        precSelec = stagesTable.getSelectionModel();
-        }else{
-            stagesTable.setSelectionModel(precSelec);
-                stagesTable.getSelectionModel().select(precStage);
-                stag = stagesTable.getSelectionModel().getSelectedItem();
-        }
-        try {
-             
-
-            PreparedStatement preparedStatement = Connexion.getConnection()
-                .prepareStatement
-                ("UPDATE STAGE SET entreprise = ?, sujet= ?, debutStage = ?, dureeNb = ?, dureeUnite = ?, promotion = ? WHERE idS = ?");
-                      
-
-            preparedStatement.setString(1, nomText.getText()); // entrerpise
-            preparedStatement.setString(2, sujetText.getText()); // sujet
-            preparedStatement.setString(3, debutBox.getValue());   // debut
-            preparedStatement.setInt(4, nombreSpinner.getValue()); // duree nombre
-            preparedStatement.setString(5, dureeBox.getValue());   // duree Unité
-            preparedStatement.setString(6, cibleBox.getValue());   // promotion cible
-            
-            preparedStatement.setInt(7, stag.getId());
-            
-            int retour = JOptionPane.showConfirmDialog(null,
-             "Êtes-vous sûr ?", 
-             "Confirmation",
-             JOptionPane.OK_CANCEL_OPTION);
-            System.out.println( retour);
-        
-            if (retour == 0){
-            preparedStatement.executeUpdate();
-        }else{
+       connexion.connect();
+       StageGphy stag = stagesTable.getSelectionModel().getSelectedItem();
+       if (stag != null){
+           precStage = stag;
+           precSelec = stagesTable.getSelectionModel();
+       }else{
+           stagesTable.setSelectionModel(precSelec);
+           stagesTable.getSelectionModel().select(precStage);
+           stag = stagesTable.getSelectionModel().getSelectedItem();
+       }
+       
+       try {
+          PreparedStatement preparedStatement = Connexion.getConnection()
+              .prepareStatement
+              ("UPDATE STAGE SET entreprise = ?, sujet= ?, debutStage = ?, dureeNb = ?, dureeUnite = ?, promotion = ? WHERE idS = ?");
+                         
+          preparedStatement.setString(1, nomText.getText()); // entrerpise
+          preparedStatement.setString(2, sujetText.getText()); // sujet
+          preparedStatement.setString(3, debutBox.getValue());   // debut
+          preparedStatement.setInt(4, nombreSpinner.getValue()); // duree nombre
+          preparedStatement.setString(5, dureeBox.getValue());   // duree Unité
+          preparedStatement.setString(6, cibleBox.getValue());   // promotion cible
+               
+          preparedStatement.setInt(7, stag.getId());
+               
+          int retour = JOptionPane.showConfirmDialog(null,
+          "Êtes-vous sûr ?", 
+          "Confirmation",
+          JOptionPane.OK_CANCEL_OPTION);
+          System.out.println( retour);
            
-           connexion.close();
-        }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        // on met à jour l'affichage de la TableView
+          if (retour == 0){
+              preparedStatement.executeUpdate();
+          }
+          else{
+              connexion.close();
+          }
+          } catch (SQLException e) {
+              e.printStackTrace();
+          }
+       // on met à jour l'affichage de la TableView
        String choice = trieBox.getValue();
        GetStage(choice, connexion);
-    
        connexion.close();
-
    }
     
    @FXML
@@ -146,30 +134,29 @@ public class SiteController implements Initializable
        connexion.connect();
        StageGphy stag = stagesTable.getSelectionModel().getSelectedItem();
        if (stag != null){
-        precStage = stag;
-        precSelec = stagesTable.getSelectionModel();
-        }else{
-            stagesTable.setSelectionModel(precSelec);
-                stagesTable.getSelectionModel().select(precStage);
-                stag = stagesTable.getSelectionModel().getSelectedItem();
-        }
+           precStage = stag;
+           precSelec = stagesTable.getSelectionModel();
+       }else{
+           stagesTable.setSelectionModel(precSelec);
+           stagesTable.getSelectionModel().select(precStage);
+           stag = stagesTable.getSelectionModel().getSelectedItem();
+       }
        int retour = JOptionPane.showConfirmDialog(null,
-             "Êtes-vous sûr ?", 
-             "Confirmation",
-             JOptionPane.OK_CANCEL_OPTION);
-        System.out.println( retour);
-
-        if (retour == 0) {
-       ResultSet resultSet = connexion.query("DELETE FROM STAGE WHERE (idS = " + stag.getId() + ")");
-       // on met à jour l'affichage de la TableView
-       String choice = trieBox.getValue();
-       GetStage(choice, connexion);
-       connexion.close();
-       JOptionPane.showMessageDialog(null,"Stage supprimé !");
-    }
-    else {
-        connexion.close();
-    }
+       "Êtes-vous sûr ?", 
+       "Confirmation",
+       JOptionPane.OK_CANCEL_OPTION);
+       System.out.println( retour);
+    
+       if (retour == 0) {
+          ResultSet resultSet = connexion.query("DELETE FROM STAGE WHERE (idS = " + stag.getId() + ")");
+          // on met à jour l'affichage de la TableView
+          String choice = trieBox.getValue();
+          GetStage(choice, connexion);
+          connexion.close();
+          JOptionPane.showMessageDialog(null,"Stage supprimé !");
+       }else {
+           connexion.close();
+       }
    }
    
    @FXML
@@ -179,27 +166,26 @@ public class SiteController implements Initializable
     */
    private void abandonnerClick(ActionEvent event)
    {
-
-    Connexion connexion = new Connexion("ScriptSQL_IHM.db");
-    connexion.connect();
-        
-    StageGphy stag = stagesTable.getSelectionModel().getSelectedItem();
-        
-    if (stag!=null){
-        String nom = ".";
-        nom = stag.getNomEntreprise();
-        if (nomText != null){nomText.setText(nom);}
-        sujetText.setText(stag.getSujetStage());
-        debutBox.setValue(stag.getDebutStage());
-        SpinnerValueFactory<Integer> dureeValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,360,stag.getDuree()); // min=1; max=360; val. par défaut=3
-        nombreSpinner.setValueFactory(dureeValueFactory);
-        dureeBox.setValue(stag.getDureeUnite());
-        cibleBox.setValue(stag.getPromotion());
-        String choice = trieBox.getValue();
-        GetStage(choice, connexion);
-    }
-    connexion.close();
-
+       Connexion connexion = new Connexion("ScriptSQL_IHM.db");
+       connexion.connect();
+           
+       StageGphy stag = stagesTable.getSelectionModel().getSelectedItem();
+           
+       if (stag!=null){
+           String nom = ".";
+           nom = stag.getNomEntreprise();
+           if (nomText != null){nomText.setText(nom);}
+           sujetText.setText(stag.getSujetStage());
+           debutBox.setValue(stag.getDebutStage());
+           SpinnerValueFactory<Integer> dureeValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,360,stag.getDuree()); // min=1; max=360; val. par défaut=3
+           nombreSpinner.setValueFactory(dureeValueFactory);
+           dureeBox.setValue(stag.getDureeUnite());
+           cibleBox.setValue(stag.getPromotion());
+           String choice = trieBox.getValue();
+           GetStage(choice, connexion);
+       }
+       connexion.close();
+       JOptionPane.showMessageDialog(null,"Modification annulée !");
    }
 
    
@@ -226,12 +212,25 @@ public class SiteController implements Initializable
        } catch (SQLException e) {
            e.printStackTrace();
        }
+       JOptionPane.showMessageDialog(null,"Stage ajouté !");
        // on met à jour l'affichage de la TableView
        String choice = trieBox.getValue();
        GetStage(choice, connexion);
        connexion.close();
+       // on réinitialise le formulaire
+       nomText.setText("");
+       sujetText.setText("");
+       debutBox.setValue("Mai");
+       SpinnerValueFactory<Integer> nombreValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,360,3); // min=1; max=360; val. par défaut=3
+       nombreSpinner.setValueFactory(nombreValueFactory);
+       dureeBox.setValue("Mois");
+       cibleBox.setValue("L3");
    }
-    
+   
+   /**
+    * Méthode popupHelp
+    * Permet d'afficher un popup expliquant comment marche l'interface.
+    */
    @FXML
    public void popupHelp(ActionEvent event)
    {
@@ -244,7 +243,12 @@ public class SiteController implements Initializable
        
        JOptionPane.showMessageDialog(null,message);
    }
-        
+   
+   /**
+    * Méthode getStage
+    * permet d'afficher les stages dans la TableView en fonction du choiceBox trieBox
+    * @param choice, connexion
+    */
    public void GetStage(String choice, Connexion connexion){
        connexion.connect();
        ResultSet resultSet = connexion.query("SELECT * FROM STAGE;");
@@ -278,7 +282,12 @@ public class SiteController implements Initializable
        connexion.close();
         
    }
-    
+   
+   /**
+    * Méthode initialize
+    * permet d'initialiser tous les éléments de l'interface
+    * @param url, rb
+    */
    @Override
    public void initialize(URL url, ResourceBundle rb)
    {
