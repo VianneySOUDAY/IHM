@@ -9,6 +9,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.collections.ObservableList;
 import java.util.ArrayList;
+import javafx.scene.control.SelectionModel;
 
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
@@ -67,6 +68,10 @@ public class SiteController implements Initializable
    @FXML private TableColumn<StageGphy,String> nomEntreprise;
    
    StageGphy unStage; 
+   StageGphy precStage;
+   TableView.TableViewSelectionModel precSelec;
+  
+   
     
    @FXML
    /**
@@ -78,7 +83,17 @@ public class SiteController implements Initializable
        Connexion connexion = new Connexion("ScriptSQL_IHM.db");
     connexion.connect();
         
+        
+        
         StageGphy stag = stagesTable.getSelectionModel().getSelectedItem();
+        if (stag != null){
+        precStage = stag;
+        precSelec = stagesTable.getSelectionModel();
+        }else{
+            stagesTable.setSelectionModel(precSelec);
+                stagesTable.getSelectionModel().select(precStage);
+                stag = stagesTable.getSelectionModel().getSelectedItem();
+        }
         try {
              
 
@@ -96,14 +111,28 @@ public class SiteController implements Initializable
             
             preparedStatement.setInt(7, stag.getId());
             
+            int retour = JOptionPane.showConfirmDialog(null,
+             "Êtes-vous sûr ?", 
+             "Confirmation",
+             JOptionPane.OK_CANCEL_OPTION);
+            System.out.println( retour);
+        
+            if (retour == 0){
             preparedStatement.executeUpdate();
+        }else{
+           
+           connexion.close();
+        }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         // on met à jour l'affichage de la TableView
        String choice = trieBox.getValue();
        GetStage(choice, connexion);
+    
        connexion.close();
+
    }
     
    @FXML
@@ -115,12 +144,32 @@ public class SiteController implements Initializable
    {
        Connexion connexion = new Connexion("ScriptSQL_IHM.db");
        connexion.connect();
-       ResultSet resultSet = connexion.query("DELETE FROM STAGE WHERE entreprise ="+nomText.getText()+" AND sujet="+sujetText.getText()+" AND debutStage="+debutBox.getValue()+" AND dureeNb="+nombreSpinner.getValue()+" AND dureeUnite="+dureeBox.getValue()+" AND promotion="+cibleBox.getValue());
+       StageGphy stag = stagesTable.getSelectionModel().getSelectedItem();
+       if (stag != null){
+        precStage = stag;
+        precSelec = stagesTable.getSelectionModel();
+        }else{
+            stagesTable.setSelectionModel(precSelec);
+                stagesTable.getSelectionModel().select(precStage);
+                stag = stagesTable.getSelectionModel().getSelectedItem();
+        }
+       int retour = JOptionPane.showConfirmDialog(null,
+             "Êtes-vous sûr ?", 
+             "Confirmation",
+             JOptionPane.OK_CANCEL_OPTION);
+        System.out.println( retour);
+
+        if (retour == 0) {
+       ResultSet resultSet = connexion.query("DELETE FROM STAGE WHERE (idS = " + stag.getId() + ")");
        // on met à jour l'affichage de la TableView
        String choice = trieBox.getValue();
        GetStage(choice, connexion);
        connexion.close();
        JOptionPane.showMessageDialog(null,"Stage supprimé !");
+    }
+    else {
+        connexion.close();
+    }
    }
    
    @FXML
@@ -130,6 +179,7 @@ public class SiteController implements Initializable
     */
    private void abandonnerClick(ActionEvent event)
    {
+
     Connexion connexion = new Connexion("ScriptSQL_IHM.db");
     connexion.connect();
         
@@ -149,7 +199,9 @@ public class SiteController implements Initializable
         GetStage(choice, connexion);
     }
     connexion.close();
+
    }
+
    
    @FXML
    /**
