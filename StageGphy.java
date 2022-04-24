@@ -14,7 +14,8 @@ public class StageGphy
     int duree;
     String dureeUnite;
     String promotion;
-    public StageGphy(String nomEntreprise, String sujetStage, String debutStage, int duree, String dureeUnite, String promotion)
+    int id;
+    public StageGphy(String nomEntreprise, String sujetStage, String debutStage, int duree, String dureeUnite, String promotion, int id)
     {
         this.nomEntreprise = nomEntreprise;
         this.sujetStage = sujetStage;
@@ -22,8 +23,12 @@ public class StageGphy
         this.duree = duree;
         this.dureeUnite = dureeUnite;
         this.promotion = promotion;
+        this.id = id;
         
     } 
+    public int getId(){
+        return id;
+    }
     public String getDebutStage(){
         return debutStage;
     }

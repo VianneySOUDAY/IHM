@@ -76,15 +76,33 @@ public class SiteController implements Initializable
    private void modifierClick(ActionEvent event)
    {
        Connexion connexion = new Connexion("ScriptSQL_IHM.db");
-       connexion.connect();
-       ResultSet resultSet = connexion.query("SELECT * FROM STAGE");
-       try {
-           while (resultSet.next()) {
-               monLabel.setText(resultSet.getString("entreprise"));
-           }
-       } catch (SQLException e) {
-           e.printStackTrace();
-       }
+    connexion.connect();
+        
+        StageGphy stag = stagesTable.getSelectionModel().getSelectedItem();
+        try {
+             
+
+            PreparedStatement preparedStatement = Connexion.getConnection()
+                .prepareStatement
+                ("UPDATE STAGE SET entreprise = ?, sujet= ?, debutStage = ?, dureeNb = ?, dureeUnite = ?, promotion = ? WHERE idS = ?");
+                      
+
+            preparedStatement.setString(1, nomText.getText()); // entrerpise
+            preparedStatement.setString(2, sujetText.getText()); // sujet
+            preparedStatement.setString(3, debutBox.getValue());   // debut
+            preparedStatement.setInt(4, nombreSpinner.getValue()); // duree nombre
+            preparedStatement.setString(5, dureeBox.getValue());   // duree Unité
+            preparedStatement.setString(6, cibleBox.getValue());   // promotion cible
+            
+            preparedStatement.setInt(7, stag.getId());
+            
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        // on met à jour l'affichage de la TableView
+       String choice = trieBox.getValue();
+       GetStage(choice, connexion);
        connexion.close();
    }
     
@@ -95,7 +113,14 @@ public class SiteController implements Initializable
     */
    private void supprimerClick(ActionEvent event)
    {
-       monLabel.setText("clic sur supprimer");
+       Connexion connexion = new Connexion("ScriptSQL_IHM.db");
+       connexion.connect();
+       ResultSet resultSet = connexion.query("DELETE FROM STAGE WHERE entreprise ="+nomText.getText()+" AND sujet="+sujetText.getText()+" AND debutStage="+debutBox.getValue()+" AND dureeNb="+nombreSpinner.getValue()+" AND dureeUnite="+dureeBox.getValue()+" AND promotion="+cibleBox.getValue());
+       // on met à jour l'affichage de la TableView
+       String choice = trieBox.getValue();
+       GetStage(choice, connexion);
+       connexion.close();
+       JOptionPane.showMessageDialog(null,"Stage supprimé !");
    }
    
    @FXML
@@ -167,7 +192,7 @@ public class SiteController implements Initializable
        try {
            while (resultSet.next()) {
                unStage = new StageGphy(resultSet.getString("entreprise"), resultSet.getString("sujet"), resultSet.getString("debutStage"),resultSet.getInt("dureeNb"),
-               resultSet.getString("dureeUnite"), resultSet.getString("promotion"));
+               resultSet.getString("dureeUnite"), resultSet.getString("promotion"), resultSet.getInt("idS"));
                sujetStage.setCellValueFactory(new PropertyValueFactory<StageGphy,String>("sujetStage"));
                
                stagesTable.getItems();
