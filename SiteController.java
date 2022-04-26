@@ -121,6 +121,15 @@ public class SiteController implements Initializable
        String choice = trieBox.getValue();
        GetStage(choice, connexion);
        connexion.close();
+       JOptionPane.showMessageDialog(null,"Modification enregistrée !");
+       // on réinitialise le formulaire
+       nomText.setText("");
+       sujetText.setText("");
+       debutBox.setValue("Mai");
+       SpinnerValueFactory<Integer> nombreValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,360,3); // min=1; max=360; val. par défaut=3
+       nombreSpinner.setValueFactory(nombreValueFactory);
+       dureeBox.setValue("Mois");
+       cibleBox.setValue("L3");
    }
     
    @FXML
@@ -172,18 +181,25 @@ public class SiteController implements Initializable
        StageGphy stag = stagesTable.getSelectionModel().getSelectedItem();
            
        if (stag!=null){
-           String nom = ".";
-           nom = stag.getNomEntreprise();
-           if (nomText != null){nomText.setText(nom);}
-           sujetText.setText(stag.getSujetStage());
-           debutBox.setValue(stag.getDebutStage());
-           SpinnerValueFactory<Integer> dureeValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,360,stag.getDuree()); // min=1; max=360; val. par défaut=3
-           nombreSpinner.setValueFactory(dureeValueFactory);
-           dureeBox.setValue(stag.getDureeUnite());
-           cibleBox.setValue(stag.getPromotion());
-           String choice = trieBox.getValue();
-           GetStage(choice, connexion);
+           precStage = stag;
+           precSelec = stagesTable.getSelectionModel();
+       }else{
+           stagesTable.setSelectionModel(precSelec);
+           stagesTable.getSelectionModel().select(precStage);
+           stag = stagesTable.getSelectionModel().getSelectedItem();
        }
+           
+       String nom = stag.getNomEntreprise();
+       if (nomText != null){nomText.setText(nom);}
+       sujetText.setText(stag.getSujetStage());
+       debutBox.setValue(stag.getDebutStage());
+       SpinnerValueFactory<Integer> dureeValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,360,stag.getDuree()); // min=1; max=360; val. par défaut=3
+       nombreSpinner.setValueFactory(dureeValueFactory);
+       dureeBox.setValue(stag.getDureeUnite());
+       cibleBox.setValue(stag.getPromotion());
+       String choice = trieBox.getValue();
+       GetStage(choice, connexion);
+       
        connexion.close();
        JOptionPane.showMessageDialog(null,"Modification annulée !");
    }
